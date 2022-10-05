@@ -1,12 +1,3 @@
-# React CRUD from Scratch planning artifacts
-
-## Order of operations
-
-### 1 getUser function in services layer
-
-- create auth component at the services layer
-
-```js
 import { client } from './client';
 
 export function getUser() {
@@ -26,4 +17,3 @@ export async function authUser(email, password, type) {
 export async function signOut() {
   await client.auth.signOut();
 }
-```
