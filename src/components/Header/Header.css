@@ -1,0 +1,12 @@
+.logout-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: bisque;
+}
+
+.logout-button .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
