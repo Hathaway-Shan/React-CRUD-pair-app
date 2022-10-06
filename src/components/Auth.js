@@ -11,7 +11,6 @@ export default function Auth() {
   const submitAuth = async () => {
     const userResp = await authUser(email, password, type);
     setUser(userResp);
-    console.log('userResp is:', userResp);
     //reset inputs
     setEmail('');
     setPassword('');
