@@ -11,3 +11,12 @@ export async function getPetById(id) {
 
   return checkError(response);
 }
+
+export async function addPet(name, species, description) {
+  const response = await client
+    .from('pets')
+    .insert([{ name, species, description }])
+    .order('id', { ascending: true })
+    .single();
+  return checkError(response);
+}
