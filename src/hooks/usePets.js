@@ -15,6 +15,6 @@ export default function usePets() {
       }
     };
     fetchPets();
-  }, [setPets]);
+  }, [pets, setPets]);
   return { pets, setPets };
 }

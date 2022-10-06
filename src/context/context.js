@@ -9,17 +9,23 @@ const UserProvider = ({ children }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [pets, setPets] = useState([]);
+  const [petDetail, setPetDetail] = useState({});
 
   return (
-    <UserContext.Provider value={{ 
-      user,
-      setUser, 
-      email, 
-      setEmail, 
-      password, 
-      setPassword,
-      pets,
-      setPets }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        pets,
+        setPets,
+        petDetail,
+        setPetDetail,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
