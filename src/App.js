@@ -4,6 +4,7 @@ import Auth from './components/Auth';
 import Pets from './components/PetList';
 import PetDetail from './components/PetDetail';
 import Header from './components/Header/Header';
+import AddPetForm from './components/AddPetForm';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/pets/edit/:id" component={PetDetail} />
+        <Route path="/pets/new" component={AddPetForm} />
         <Route path="/auth/:type" component={Auth} />
         <Route path="/pets" component={Pets} />
 

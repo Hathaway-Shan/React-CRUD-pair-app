@@ -10,6 +10,9 @@ const UserProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [pets, setPets] = useState([]);
   const [petDetail, setPetDetail] = useState({});
+  const [name, setName] = useState('');
+  const [species, setSpecies] = useState('');
+  const [description, setDescription] = useState('');
 
   return (
     <UserContext.Provider
@@ -24,6 +27,12 @@ const UserProvider = ({ children }) => {
         setPets,
         petDetail,
         setPetDetail,
+        name,
+        setName,
+        species,
+        setSpecies,
+        description,
+        setDescription
       }}
     >
       {children}
