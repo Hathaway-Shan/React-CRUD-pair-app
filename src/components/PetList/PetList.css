@@ -1,0 +1,25 @@
+.petListWrapper {
+  background-size: contain;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.pets {
+  border: 1px solid black;
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.295);
+  align-self: center;
+  margin-bottom: 10px;
+}
+.navLinks :hover {
+  color: rgb(41, 229, 44);
+}
+
+.navLinks a.active {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 30px;
+}
