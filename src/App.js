@@ -1,6 +1,6 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import Auth from './components/Auth';
+import Auth from './components/Auth/Auth';
 import Pets from './components/PetList';
 import PetDetail from './components/PetDetail';
 import Header from './components/Header/Header';

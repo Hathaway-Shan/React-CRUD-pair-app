@@ -1,0 +1,8 @@
+.navLinks :hover {
+  color: rgb(41, 229, 44);
+}
+
+.navLinks a.active {
+  text-decoration: none;
+  font-weight: bold;
+}

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { NavLink, Redirect, useParams } from 'react-router-dom';
-import { UserContext } from '../context/context';
-import { authUser } from '../services/auth';
+import { UserContext } from '../../context/context';
+import { authUser } from '../../services/auth';
+import './Auth.css';
 
 export default function Auth() {
   const { user, setUser, email, setEmail, password, setPassword } = useContext(UserContext);
