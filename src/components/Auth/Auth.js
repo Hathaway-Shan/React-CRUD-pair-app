@@ -22,33 +22,36 @@ export default function Auth() {
   }
 
   return (
-    <div className="authBox">
-      <div className="navLinks">
-        <NavLink to="/auth/sign-in">Sign In</NavLink>
-        <NavLink to="/auth/sign-up">Sign Up</NavLink>
-      </div>
-      <label className="label">Email</label>
-      <div className="emailBox">
-        <input
-          className="input"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <label className="label">Password</label>
-      <div className="passwordBox">
-        <input
-          className="input"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className="control">
-        <button onClick={submitAuth} className="button">
+    <div className='auth-container' style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/monsterbackground.jpg'})`
+    }}>
+      <div className="authBox">
+        <div className="navLinks">
+          <NavLink className="sign-in-link" to="/auth/sign-in">Sign In</NavLink>
+          <NavLink className="sign-up-link" to="/auth/sign-up">Sign Up</NavLink>
+        </div>
+        <label className="label">Email</label>
+        <div className="emailBox">
+          <input
+            className="input"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <label className="label">Password</label>
+        <div className="passwordBox">
+          <input
+            className="input"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="control">
+          <button onClick={submitAuth} className="button">
           Submit
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Auth from './components/Auth/Auth';
-import Pets from './components/PetList';
+import Pets from './components/PetList/PetList';
 import PetDetail from './components/PetDetail';
 import Header from './components/Header/Header';
 import AddPetForm from './components/AddPetForm';
+
 
 function App() {
   return (

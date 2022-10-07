@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { UserContext } from '../../context/context';
 import { signOut } from '../../services/auth';
+import './Header.css';
 
 export default function Header() {
   const { user, setUser } = useContext(UserContext);
@@ -18,7 +19,7 @@ export default function Header() {
 
   if (user)
     return (
-      <div>
+      <div className='header-container'>
         <NavLink to="/pets/new">Add A Pet</NavLink>
         <div>hello {user.email}</div>
         <button className="logout-button" onClick={handleLogout}>
