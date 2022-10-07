@@ -1,3 +1,4 @@
+import PetCard from '../components/PetCard';
 import { checkError, client } from './client';
 
 export async function getPets() {
@@ -18,5 +19,11 @@ export async function addPet(name, species, description) {
     .insert([{ name, species, description }])
     .order('id', { ascending: true })
     .single();
+  return checkError(response);
+}
+
+export async function updatePet(pet) {
+  const response = await client.from('pets').update(pet).match({ id: pet.id });
+  console.log(response.data);
   return checkError(response);
 }

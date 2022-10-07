@@ -1,8 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../context/context';
 
 export default function PetForm({ submit }) {
   const { name, setName, species, setSpecies, description, setDescription } = useContext(UserContext);
+
+  // const [nameInput, setNameInput] = useState(name);
+  // const [speciesInput, setSpeciesInput] = useState(species);
+  // const [descriptionInput, setDescriptionInput] = useState(description);
 
 
   return (
