@@ -22,6 +22,15 @@ const mockPet = {
   name: 'missingPet',
   species: '????',
   description: 'Just some hovering data glitching out the screen',
+  owner_id: '0dab2c65-5911-469c-9f12-8fb47ebe52f2',
+};
+
+const editMockPet = {
+  id: '1',
+  name: 'missingPet',
+  species: '????',
+  description: 'had to restart the game',
+  owner_id: '0dab2c65-5911-469c-9f12-8fb47ebe52f2',
 };
 
 test.skip('user can sign in', async () => {
@@ -91,10 +100,11 @@ test.skip('users can sign out', async () => {
   expect(headerText).toBeInTheDocument();
 });
 
-test('Users can add new pets', async () => {
+test.skip('Users can add new pets', async () => {
   authFunctions.getUser.mockReturnValue(null);
   authFunctions.authUser.mockReturnValue(mockUser);
   petFunctions.getPets.mockReturnValue([mockPet]);
+  petFunctions.updatePet.mockReturnValue();
 
   render(
     <UserProvider>
@@ -154,5 +164,95 @@ test('Users can add new pets', async () => {
   });
   /* assert on the output */
   const missingPet = await screen.findByText('missingPet');
+  expect(missingPet).toBeInTheDocument();
+});
+test('Users can update their own pets', async () => {
+  authFunctions.getUser.mockReturnValue(null);
+  authFunctions.authUser.mockReturnValue(mockUser);
+  petFunctions.getPets.mockReturnValue([editMockPet]);
+  petFunctions.getPetById(mockPet);
+  petFunctions.updatePet(editMockPet);
+
+  render(
+    <UserProvider>
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </UserProvider>
+  );
+  const headerElem = screen.getByText(/Welcome to Monster Pets!/i);
+  expect(headerElem).toBeInTheDocument();
+
+  const emailInput = screen.getByLabelText(/email/i);
+  fireEvent.change(emailInput, { target: { value: 'dog@example.com' } });
+  expect(emailInput.value).toBe('dog@example.com');
+
+  const passwordInput = screen.getByLabelText(/password/i);
+  fireEvent.change(passwordInput, { target: { value: '123456' } });
+
+  const button = screen.getByRole('button');
+  fireEvent.click(button);
+
+  const headerText = await screen.findByText('hello dog@example.com');
+  expect(headerText).toBeInTheDocument();
+
+  //user is now signed in
+
+  act(() => {
+    /* fire events that update state */
+    const addPetLink = screen.getByText(/add a pet/i);
+    fireEvent.click(addPetLink);
+  });
+  /* assert on the output */
+  const addPetHeading = await screen.findByText('Add New Pet');
+  expect(addPetHeading).toBeInTheDocument();
+
+  //name input
+  const nameInput = screen.getByLabelText(/name:/i);
+  fireEvent.change(nameInput, { target: { value: 'missingPet' } });
+  expect(nameInput.value).toBe('missingPet');
+
+  //species input
+  const speciesInput = screen.getByLabelText(/species:/i);
+  fireEvent.change(speciesInput, { target: { value: '????' } });
+  expect(speciesInput.value).toBe('????');
+
+  //description input
+  let descriptionInput = screen.getByLabelText(/description:/i);
+  fireEvent.change(descriptionInput, {
+    target: { value: 'Just some hovering data glitching out the screen' },
+  });
+  expect(descriptionInput.value).toBe('Just some hovering data glitching out the screen');
+
+  act(() => {
+    /* fire events that update state */
+    const savePet = screen.getByText(/save/i);
+    fireEvent.click(savePet);
+  });
+  /* assert on the output */
+  let missingPet = await screen.findByText('missingPet');
+  expect(missingPet).toBeInTheDocument();
+
+  act(() => {
+    /* fire events that update state */
+    const editPet = screen.getByText(/edit/i);
+    fireEvent.click(editPet);
+  });
+  /* assert on the output */
+  expect(nameInput.value).toBe('missingPet');
+  expect(speciesInput.value).toBe('????');
+  expect(descriptionInput.value).toBe('Just some hovering data glitching out the screen');
+
+  //name input
+  descriptionInput = screen.getByLabelText(/description:/i);
+  fireEvent.change(descriptionInput, { target: { value: 'had to restart the game' } });
+  expect(descriptionInput.value).toBe('had to restart the game');
+  act(() => {
+    /* fire events that update state */
+    const savePet = screen.getByText(/save/i);
+    fireEvent.click(savePet);
+  });
+  /* assert on the output */
+  missingPet = await screen.findByText('had to restart the game');
   expect(missingPet).toBeInTheDocument();
 });
