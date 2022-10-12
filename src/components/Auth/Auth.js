@@ -29,19 +29,21 @@ export default function Auth() {
           <NavLink className="sign-in-link" to="/auth/sign-in">Sign In</NavLink>
           <NavLink className="sign-up-link" to="/auth/sign-up">Sign Up</NavLink>
         </div>
-        <label className="label">Email</label>
+        <label htmlFor="email" className="label">Email</label>
         <div className="emailBox">
           <input
             className="input"
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <label className="label">Password</label>
+        <label htmlFor="password" className="label">Password</label>
         <div className="passwordBox">
           <input
             className="input"
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
