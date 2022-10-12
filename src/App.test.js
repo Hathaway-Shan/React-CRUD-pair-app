@@ -17,6 +17,21 @@ const mockUser = {
   email: 'dog@example.com',
 };
 
+const mockPetArray = [
+  {
+    id: 2,
+    name: 'testPet1',
+    species: 'test',
+    description: 'test',
+  },
+  {
+    id: 3,
+    name: 'testPet2',
+    species: 'test',
+    description: 'test',
+  },
+];
+
 const mockPet = {
   id: '1',
   name: 'missingPet',
@@ -33,7 +48,7 @@ const editMockPet = {
   owner_id: '0dab2c65-5911-469c-9f12-8fb47ebe52f2',
 };
 
-test.skip('user can sign in', async () => {
+test('user can sign in', async () => {
   authFunctions.getUser.mockReturnValue(null);
   authFunctions.authUser.mockReturnValue(mockUser);
 
@@ -61,7 +76,7 @@ test.skip('user can sign in', async () => {
   expect(headerText).toBeInTheDocument();
 });
 
-test.skip('users can sign out', async () => {
+test('users can sign out', async () => {
   authFunctions.getUser.mockReturnValue(null);
   authFunctions.authUser.mockReturnValue(mockUser);
 
@@ -100,7 +115,38 @@ test.skip('users can sign out', async () => {
   expect(headerText).toBeInTheDocument();
 });
 
-test.skip('Users can add new pets', async () => {
+test('users can see a list of pets', async () => {
+  authFunctions.getUser.mockReturnValue(mockUser);
+  petFunctions.getPets.mockReturnValue(mockPetArray);
+
+  authFunctions.getUser.mockReturnValue(null);
+  authFunctions.authUser.mockReturnValue(mockUser);
+
+  render(
+    <UserProvider>
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </UserProvider>
+  );
+  const headerElem = screen.getByText(/Welcome to Monster Pets!/i);
+  expect(headerElem).toBeInTheDocument();
+
+  const emailInput = screen.getByLabelText(/email/i);
+  fireEvent.change(emailInput, { target: { value: 'dog@example.com' } });
+  expect(emailInput.value).toBe('dog@example.com');
+
+  const passwordInput = screen.getByLabelText(/password/i);
+  fireEvent.change(passwordInput, { target: { value: '123456' } });
+
+  const button = screen.getByRole('button');
+  fireEvent.click(button);
+
+  await screen.findByText('testPet1');
+  await screen.findByText('testPet2');
+});
+
+test('Users can add new pets', async () => {
   authFunctions.getUser.mockReturnValue(null);
   authFunctions.authUser.mockReturnValue(mockUser);
   petFunctions.getPets.mockReturnValue([mockPet]);
