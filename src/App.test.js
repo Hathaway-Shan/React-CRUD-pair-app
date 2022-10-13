@@ -302,3 +302,86 @@ test('Users can update their own pets', async () => {
   missingPet = await screen.findByText('had to restart the game');
   expect(missingPet).toBeInTheDocument();
 });
+test.only('users can delete their pets', async () => {
+  authFunctions.getUser.mockReturnValue(null);
+  authFunctions.authUser.mockReturnValue(mockUser);
+  petFunctions.getPets.mockReturnValue([mockPet]);
+  petFunctions.getPetById(mockPet);
+  petFunctions.deletePet.mockReturnValue(mockPet.id);
+
+  render(
+    <UserProvider>
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </UserProvider>
+  );
+  const headerElem = screen.getByText(/Welcome to Monster Pets!/i);
+  expect(headerElem).toBeInTheDocument();
+
+  const emailInput = screen.getByLabelText(/email/i);
+  fireEvent.change(emailInput, { target: { value: 'dog@example.com' } });
+  expect(emailInput.value).toBe('dog@example.com');
+
+  const passwordInput = screen.getByLabelText(/password/i);
+  fireEvent.change(passwordInput, { target: { value: '123456' } });
+
+  const button = screen.getByRole('button');
+  fireEvent.click(button);
+
+  const headerText = await screen.findByText('hello dog@example.com');
+  expect(headerText).toBeInTheDocument();
+
+  //user is now signed in
+
+  act(() => {
+    /* fire events that update state */
+    const addPetLink = screen.getByText(/add a pet/i);
+    fireEvent.click(addPetLink);
+  });
+  /* assert on the output */
+  const addPetHeading = await screen.findByText('Add New Pet');
+  expect(addPetHeading).toBeInTheDocument();
+
+  //name input
+  const nameInput = screen.getByLabelText(/name:/i);
+  fireEvent.change(nameInput, { target: { value: 'missingPet' } });
+  expect(nameInput.value).toBe('missingPet');
+
+  //species input
+  const speciesInput = screen.getByLabelText(/species:/i);
+  fireEvent.change(speciesInput, { target: { value: '????' } });
+  expect(speciesInput.value).toBe('????');
+
+  //description input
+  let descriptionInput = screen.getByLabelText(/description:/i);
+  fireEvent.change(descriptionInput, {
+    target: { value: 'Just some hovering data glitching out the screen' },
+  });
+  expect(descriptionInput.value).toBe('Just some hovering data glitching out the screen');
+
+  act(() => {
+    /* fire events that update state */
+    const savePet = screen.getByText(/save/i);
+    fireEvent.click(savePet);
+  });
+  /* assert on the output */
+  let missingPet = await screen.findByText('missingPet');
+  expect(missingPet).toBeInTheDocument();
+
+  act(() => {
+    /* fire events that update state */
+    const editPet = screen.getByText(/edit/i);
+    fireEvent.click(editPet);
+  });
+  /* assert on the output */
+  expect(nameInput.value).toBe('missingPet');
+  expect(speciesInput.value).toBe('????');
+  expect(descriptionInput.value).toBe('Just some hovering data glitching out the screen');
+  act(() => {
+    /* fire events that update state */
+    const deletePet = screen.getByText(/delete/i);
+    fireEvent.click(deletePet);
+  });
+  expect(petFunctions.deletePet).toBeCalled();
+});
