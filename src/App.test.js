@@ -302,7 +302,7 @@ test('Users can update their own pets', async () => {
   missingPet = await screen.findByText('had to restart the game');
   expect(missingPet).toBeInTheDocument();
 });
-test.only('users can delete their pets', async () => {
+test('users can delete their pets', async () => {
   authFunctions.getUser.mockReturnValue(null);
   authFunctions.authUser.mockReturnValue(mockUser);
   petFunctions.getPets.mockReturnValue([mockPet]);
