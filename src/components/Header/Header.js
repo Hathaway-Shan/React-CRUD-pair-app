@@ -17,9 +17,16 @@ export default function Header() {
     }
   };
 
+  if (!user)
+    return (
+      <div className="header-container">
+        <div>Welcome to Monster Pets!</div>
+      </div>
+    );
+
   if (user)
     return (
-      <div className='header-container'>
+      <div className="header-container">
         <NavLink to="/pets/new">Add A Pet</NavLink>
         <div>hello {user.email}</div>
         <button className="logout-button" onClick={handleLogout}>
